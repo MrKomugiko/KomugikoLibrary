@@ -41,9 +41,12 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Enums\ContentFormatType.cs" />
+    <Compile Include="Paragraph\Enums\ContentFormatType.cs" />
     <Compile Include="NumbersConverter.cs" />
-    <Compile Include="ParagrafSectionBuilder.cs" />
+    <Compile Include="Paragraph\Paragraf.cs" />
+    <Compile Include="Paragraph\ParagrafElement.cs" />
+    <Compile Include="Paragraph\ParagrafExtensions.cs" />
+    <Compile Include="Paragraph\ParagrafSectionBuilder.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
