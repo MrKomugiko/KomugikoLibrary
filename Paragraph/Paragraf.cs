@@ -6,22 +6,17 @@ namespace KomugikoLibrary
 {
     public class Paragraf
     {
-        public ContentFormatType elementDefaultStyle = ContentFormatType.td_split_numbered;
+        public List<Paragraf[]> ParagrafReferenceList = new List<Paragraf[]>();
+        public List<ParagrafElement> Content = new List<ParagrafElement>();
 
         public const string ParagraphSign = "§";
+        public string StyleClass_header = "paragraph-header";
 
-        #region Reference Settings
-        public List<Paragraf[]> ParagrafReferenceList = new List<Paragraf[]>();
         public bool hasReference = false;
-        public void AddReferences(Paragraf[] _references)
-        {
-            hasReference = true;
-            ParagrafReferenceList.Add(_references);
-        }
-        #endregion
-
-
-        private ParagrafSectionBuilder parentSection;
+        public int NextElementNumber = 1;
+        public int NextReferenceIndexToLoad = 0;
+        public ContentFormatType elementDefaultStyle;
+       
         public int Number
         {
             get
@@ -36,19 +31,29 @@ namespace KomugikoLibrary
         {
             get
             {
-                return String.Format("{0}{1}", ParagraphSign, Number);
+                if (Number > -1)
+                    return String.Format("{0}{1}", ParagraphSign, Number);
+                else
+                    return "[REFERENCE NOT FOUND]";
             }
         }
 
-        public int NextElementNumber = 1;
-        public int NextReferenceIndexToLoad = 0;
-
-        public List<ParagrafElement> Content = new List<ParagrafElement>();
+        private ParagrafSectionBuilder parentSection;
+        
+        #region constructors
         public Paragraf() {
 
         }
         public Paragraf(ParagrafSectionBuilder _parent) {
             parentSection = _parent;
+        }
+
+        #endregion
+
+        public void AddReferences(Paragraf[] _references)
+        {
+            hasReference = true;
+            ParagrafReferenceList.Add(_references);
         }
         public void AttachToParent(ParagrafSectionBuilder paragrafSectionBuilder)
         {
@@ -64,7 +69,7 @@ namespace KomugikoLibrary
         }
         public string GetHeader()
         {
-            return "<td colspan='2' class='paragraph-header'>"+
+            return String.Format("<td colspan='2' class='{0}'>", StyleClass_header) +
                     String.Format("{0}{1}", ParagraphSign,Number) +
                     "</td>";
         }

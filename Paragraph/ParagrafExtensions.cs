@@ -6,12 +6,23 @@ namespace KomugikoLibrary
 {
     public static class ParagrafExtensions
     {
+        public static Paragraf AddElement(this Paragraf parent, ParagrafElement element)
+        {
+            element.SetParent(parent);
+            parent.AddContent(element);
+            return parent;
+        }
         public static Paragraf AddElement(this Paragraf parent, string element)
         {
             parent.AddContent(new ParagrafElement(element,parent));
             return parent;
         }
         public static Paragraf AddSubElement(this Paragraf parent, string element)
+        {
+            parent.Content.Last().AddToContent(element);
+            return parent;
+        }
+        public static Paragraf AddNumeratedSubElement(this Paragraf parent, string element)
         {
             parent.Content.Last().AddToContent(element);
             return parent;

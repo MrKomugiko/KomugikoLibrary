@@ -8,6 +8,8 @@ namespace KomugikoLibrary
     {
         public List<Paragraf> ParagrafList = new List<Paragraf>();
 
+        public const string ParagraphSign = "§";
+
         public Paragraf NewParagraph()
         {
             Paragraf _paragraf = new Paragraf(this);
