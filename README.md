@@ -64,10 +64,10 @@
 
 
 ## Result
-![HTML result](https://github.com/MrKomugiko/KomugikoLibrary/blob/master/paragrafExample.png)
+![HTML result](https://github.com/MrKomugiko/KomugikoLibrary/blob/master/paragrafExample2.png)
 
 
-## RenderedOutput
+## output example stucture 
 ```html
 *.HTML
 <table border="0" cellspacing="0" class="defaultTable">
@@ -96,36 +96,4 @@
     </tr>                              
   </tbody>
  </table>
-                                
-<table border="0" cellspacing="0" class="defaultTable">
-  <tbody>
-    <tr>
-      <td colspan="2" class="paragraph-header">§28</td>
-    </tr>
-    <tr>
-      <td class="paragraph-point">1.</td>
-      <td class="paragraph-content">numbered row</td>           
-    </tr>
-    <tr>
-      <td colspan="2" class="paragraph-content">full width</td>           
-    </tr>
-    <tr>
-      <td class="paragraph-point">2.</td>
-      <td class="paragraph-content">again back to numbers<br>a) sub-element</td>           
-    </tr>
-  </tbody>
-</table>
-
-<table border="0" cellspacing="0" class="defaultTable">
-  <tbody>
-    <tr>
-      <td colspan="2" class="paragraph-header">§29</td>
-    </tr>
-    <tr>
-      <td class="paragraph-point">1.</td>
-      <td class="paragraph-content">new refernce paragraf 3</td>           
-    </tr>
-  </tbody>
-</table>
-
 ```
