@@ -39,6 +39,8 @@ namespace KomugikoLibrary
                 ParentParagraf = _parent;
             }
             ContentList.Add(_content);
+            
+            _parent.RecentElementAddingStatus = true;
         }
         #endregion
         

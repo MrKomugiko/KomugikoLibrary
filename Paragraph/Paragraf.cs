@@ -39,7 +39,8 @@ namespace KomugikoLibrary
         }
 
         private ParagrafSectionBuilder parentSection;
-        
+        internal bool RecentElementAddingStatus;
+
         #region constructors
         public Paragraf() {
 

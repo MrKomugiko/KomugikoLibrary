@@ -17,11 +17,36 @@ namespace KomugikoLibrary
             parent.AddContent(new ParagrafElement(element,parent));
             return parent;
         }
+
+        public static Paragraf ConditionallyAddElement(this Paragraf parent, bool result, string element)
+        {
+            if(result == false)
+            {
+                parent.RecentElementAddingStatus = false;
+            }
+            else
+            {
+                parent.AddContent(new ParagrafElement(element, parent));
+            }
+
+            return parent;
+        }
+
         public static Paragraf AddSubElement(this Paragraf parent, string element)
         {
             parent.Content.Last().AddToContent(element);
             return parent;
         }
+        public static Paragraf AddSubElementRequireParent(this Paragraf parent, string element)
+        {
+            // check if last adding Paragraf was added succesfully
+            if(parent.RecentElementAddingStatus == true)
+            {
+                parent.Content.Last().AddToContent(element);
+            }
+            return parent;
+        }
+        
         public static Paragraf AddNumeratedSubElement(this Paragraf parent, string element)
         {
             parent.Content.Last().AddToContent(element);
@@ -49,6 +74,12 @@ namespace KomugikoLibrary
         {
             parent.AddReferences(_references);
             return parent;
+        }
+
+        public struct ConditionResultData
+        {
+            public bool Result;
+            public string ElementContent;
         }
     }
 }
