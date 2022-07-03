@@ -37,6 +37,15 @@ namespace KomugikoLibrary
             parent.Content.Last().AddToContent(element);
             return parent;
         }
+        public static Paragraf ConditionallySubElement(this Paragraf parent, bool result, string element)
+        {
+            if (result == true)
+            {
+                parent.Content.Last().AddToContent(element);
+            }
+
+            return parent;
+        }
         public static Paragraf AddSubElementRequireParent(this Paragraf parent, string element)
         {
             // check if last adding Paragraf was added succesfully
