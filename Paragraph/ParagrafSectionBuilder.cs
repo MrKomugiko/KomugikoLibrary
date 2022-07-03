@@ -6,12 +6,7 @@ namespace KomugikoLibrary
 {
     public class ParagrafSectionBuilder
     {
-        public List<Paragraf> ParagrafList;
-
-        public ParagrafSectionBuilder(List<Paragraf> paragraflist)
-        {
-            ParagrafList = paragraflist;
-        }
+        public List<Paragraf> ParagrafList = new List<Paragraf>();
 
         public Paragraf NewParagraph()
         {

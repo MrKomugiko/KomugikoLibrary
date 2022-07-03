@@ -26,6 +26,8 @@ namespace KomugikoLibrary
         {
             get
             {
+                if (parentSection == null) return -1;
+
                 int elementIndex = parentSection.ParagrafList.FindIndex(x => x == this);
                 return elementIndex + 1; // number start counting from 1
             }
@@ -39,6 +41,8 @@ namespace KomugikoLibrary
         }
 
         public int NextElementNumber = 1;
+        public int NextReferenceIndexToLoad = 0;
+
         public List<ParagrafElement> Content = new List<ParagrafElement>();
         public Paragraf() {
 

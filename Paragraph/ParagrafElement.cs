@@ -7,7 +7,7 @@ namespace KomugikoLibrary
 {
     public class ParagrafElement
     {
-        public ContentFormatType elementStyle = ContentFormatType.td_split_numbered;
+        public ContentFormatType elementStyle;
         private readonly Paragraf ParentParagraf;
         public int GetNumber()
         {
@@ -28,26 +28,33 @@ namespace KomugikoLibrary
         {
             ContentList.Add(_content);
         }
+        
+        private bool ReferenceLoaded = false;
+        private void LoadReferences()
+        {
+            string key = "~REFERENCE~";
+            int keywordLength = key.Length;
+            int referenceIndex = ParentParagraf.NextReferenceIndexToLoad;
+
+            for (int elementIndex = 0; elementIndex < ContentList.Count; elementIndex++)
+            {
+                if (ParentParagraf.ParagrafReferenceList.Count - 1 < referenceIndex) break;
+
+                while (ContentList[elementIndex].IndexOf(key) > 1)
+                {
+                    int startIndex = ContentList[elementIndex].IndexOf(key);
+                    string referenceJoinedString = String.Join(",", ParentParagraf.ParagrafReferenceList[referenceIndex++].Select(x => x.ReferenceString).ToList());
+                    ContentList[elementIndex] = ContentList[elementIndex].Remove(startIndex, keywordLength).Insert(startIndex, referenceJoinedString);
+                    ParentParagraf.NextReferenceIndexToLoad++;
+                }
+            }
+            ReferenceLoaded = true;
+        }
         public string GetContent()
         {
-            if(ParentParagraf.hasReference)
+            if(ParentParagraf.hasReference && ReferenceLoaded==false)
             {
-                string key = "~REFERENCE~";
-                int keywordLength = key.Length;
-                int referenceIndex = 0;
-
-                for (int i = 0; i < ContentList.Count; i++)
-                {
-                    bool ReferenceSlotExist = ContentList[i].IndexOf(key) > -1;
-                    bool ReferenceExist = ParentParagraf.ParagrafReferenceList.Count > referenceIndex;
-
-                    while (ReferenceSlotExist && ReferenceExist)
-                    {  
-                        int keywordStartIndex = ContentList[i].IndexOf(key);
-                        string referenceJoinedString = String.Join(",", ParentParagraf.ParagrafReferenceList[referenceIndex++].Select(x => x.ReferenceString).ToList());
-                        ContentList[i] = ContentList[i].Remove(keywordStartIndex, keywordLength).Insert(keywordStartIndex, referenceJoinedString);
-                    }
-                }
+                LoadReferences();
             }
             
             return String.Join("<br />", ContentList);
