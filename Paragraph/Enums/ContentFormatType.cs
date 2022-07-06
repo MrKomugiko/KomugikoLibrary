@@ -1,4 +1,4 @@
-﻿namespace KomugikoLibrary_Client.Enums
+﻿namespace KomugikoLibrary.Enums
 {
     public enum ContentFormatType
     {

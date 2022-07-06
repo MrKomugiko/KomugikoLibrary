@@ -1,4 +1,4 @@
-﻿using KomugikoLibrary_Client.Enums;
+﻿using KomugikoLibrary.Enums;
 using System;
 using System.Linq;
 
@@ -56,11 +56,6 @@ namespace KomugikoLibrary
             return parent;
         }
         
-        public static Paragraf AddNumeratedSubElement(this Paragraf parent, string element)
-        {
-            parent.Content.Last().AddToContent(element);
-            return parent;
-        }
         /// <summary>
         /// zwyczajne doczepienie kropki do ostatniego wpisu, w przypadku gdy jakis IF stoi nam przed koncem elementu;
         /// </summary>
@@ -85,6 +80,28 @@ namespace KomugikoLibrary
             return parent;
         }
 
+        public static Paragraf SetGlobalStyleClassForElements(this Paragraf parent, string all_classStyle)
+        {
+            parent.Global_StyleClass_content = all_classStyle;
+            parent.Global_StyleClass_point = all_classStyle;
+            return parent;
+        }
+        public static Paragraf SetGlobalStyleClassForElementsPoint(this Paragraf parent,string point_classStyle)
+        {
+            parent.Global_StyleClass_point = point_classStyle;
+            return parent;
+        }
+        public static Paragraf SetGlobalStyleClassForElementsContent(this Paragraf parent,string content_classStyle)
+        {
+            parent.Global_StyleClass_content = content_classStyle;
+            return parent;
+        }
+        public static Paragraf ResetGlobalStyleClassesForElements(this Paragraf parent)
+        {
+            parent.Global_StyleClass_content = null;
+            parent.Global_StyleClass_point = null;
+            return parent;
+        }
         public struct ConditionResultData
         {
             public bool Result;

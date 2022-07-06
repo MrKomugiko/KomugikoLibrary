@@ -1,4 +1,4 @@
-﻿using KomugikoLibrary_Client.Enums;
+﻿using KomugikoLibrary.Enums;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -70,7 +70,7 @@ namespace KomugikoLibrary
         ///     <br />
         ///     updated element when multiple reference:<br /><c>"element is referencing to §5,§2,§3 paragraph."</c><br />
         ///      <br />
-        ///     updated element when missing reference:<br /><c>"element is referencing to §5,[REFERENCE NOT FOUND] paragraph."</c>
+        ///     updated element when missing reference:<br /><c>"element is referencing to §5 paragraph."</c> // just skip, dont show error
         /// </example>
         /// </summary>
         private void LoadReferences()
@@ -86,7 +86,9 @@ namespace KomugikoLibrary
                 while (ContentList[elementIndex].IndexOf(key) > 1)
                 {
                     int startIndex = ContentList[elementIndex].IndexOf(key);
-                    string referenceJoinedString = String.Join(",", ParentParagraf.ParagrafReferenceList[referenceIndex++].Select(x => x.ReferenceString).ToList());
+                    string referenceJoinedString = String.Join(",", ParentParagraf.ParagrafReferenceList[referenceIndex++]
+                        .Where(x=>String.IsNullOrEmpty(x.ReferenceString) == false)
+                        .Select(x => x.ReferenceString).ToList());
                     ContentList[elementIndex] = ContentList[elementIndex].Remove(startIndex, keywordLength).Insert(startIndex, referenceJoinedString);
                     ParentParagraf.NextReferenceIndexToLoad++;
                 }

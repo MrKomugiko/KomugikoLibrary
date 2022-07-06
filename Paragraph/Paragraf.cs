@@ -1,4 +1,4 @@
-﻿using KomugikoLibrary_Client.Enums;
+﻿using KomugikoLibrary.Enums;
 using System;
 using System.Collections.Generic;
 
@@ -8,7 +8,7 @@ namespace KomugikoLibrary
     {
         public List<Paragraf[]> ParagrafReferenceList = new List<Paragraf[]>();
         public List<ParagrafElement> Content = new List<ParagrafElement>();
-
+        public bool ForcedPageBreak = false;
         public const string ParagraphSign = "§";
         public string StyleClass_header = "paragraph-header";
 
@@ -16,7 +16,9 @@ namespace KomugikoLibrary
         public int NextElementNumber = 1;
         public int NextReferenceIndexToLoad = 0;
         public ContentFormatType elementDefaultStyle;
-       
+        public string Global_StyleClass_point = null;
+        public string Global_StyleClass_content = null;
+
         public int Number
         {
             get
@@ -34,7 +36,7 @@ namespace KomugikoLibrary
                 if (Number > -1)
                     return String.Format("{0}{1}", ParagraphSign, Number);
                 else
-                    return "[REFERENCE NOT FOUND]";
+                    return ""; // "[REFERENCE NOT FOUND]";
             }
         }
 
@@ -65,6 +67,8 @@ namespace KomugikoLibrary
             foreach(var element in contentList)
             {
                 element.elementStyle = elementDefaultStyle;
+                element.StyleClass_content = Global_StyleClass_point != null ? Global_StyleClass_point : element.StyleClass_content;
+                element.StyleClass_point = Global_StyleClass_point != null ? Global_StyleClass_point : element.StyleClass_point;
             }
             Content.AddRange(contentList);
         }
