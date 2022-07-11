@@ -1,33 +1,26 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
 namespace KomugikoLibrary
 {
     public static class NumbersConverter
     {
-        // angielski konwerter
-        public static string NumberToWords_ENG(int number)
+        public static string NumberToWords_EN(int number)
         {
             string words = "";
 
             if ((number / 1000000) > 0)
             {
-                words += NumberToWords_ENG(number / 1000000) + " million ";
+                words += NumberToWords_EN(number / 1000000) + " million ";
                 number %= 1000000;
             }
 
             if ((number / 1000) > 0)
             {
-                words += NumberToWords_ENG(number / 1000) + " thousand ";
+                words += NumberToWords_EN(number / 1000) + " thousand ";
                 number %= 1000;
             }
 
             if ((number / 100) > 0)
             {
-                words += NumberToWords_ENG(number / 100) + " hundred ";
+                words += NumberToWords_EN(number / 100) + " hundred ";
                 number %= 100;
             }
 
@@ -51,86 +44,14 @@ namespace KomugikoLibrary
 
             return words;
         }
-
-
-        // ukrainski konwerter
-        public static string GrnPhrase_UA(decimal money)
-        {
-            return CurPhrase(money, "гривня", "гривні", "гривень", "копійка", "копійки", "копійок");
-        }
-        public static string NumPhrase(ulong Value, bool IsMale)
-        {
-            if (Value == 0UL) return "Нуль";
-            string[] Dek1 = { "", " од", " дв", " три", " чотири", " п'ять", " шість", " сім", " вісім", " дев'ять", " десять", " одинадцять", " дванадцять", " тринадцять", " чотирнадцять", " п'ятнадцять", " шістнадцять", " сімнадцять", " вісімнадцять", " дев'ятнадцять" };
-            string[] Dek2 = { "", "", " двадцять", " тридцять", " сорок", " п'ятдесят", " шістдесят", " сімдесят", " вісімдесят", " дев'яносто" };
-            string[] Dek3 = { "", " сто", " двісті", " триста", " чотириста", " п'ятсот", " шістсот", " сімсот", " вісімсот", " дев'ятсот" };
-            string[] Th = { "", "", " тисяч", " мільйон", " міліард", " триліон", " квадриліон", " квинтиліон" };
-            string str = "";
-            for (byte th = 1; Value > 0; th++)
-            {
-                ushort gr = (ushort)(Value % 1000);
-                Value = (Value - gr) / 1000;
-                if (gr > 0)
-                {
-                    byte d3 = (byte)((gr - gr % 100) / 100);
-                    byte d1 = (byte)(gr % 10);
-                    byte d2 = (byte)((gr - d3 * 100 - d1) / 10);
-                    if (d2 == 1) d1 += (byte)10;
-                    bool ismale = (th > 2) || ((th == 1) && IsMale);
-                    str = Dek3[d3] + Dek2[d2] + Dek1[d1] + EndDek1(d1, ismale) + Th[th] + EndTh(th, d1) + str;
-                };
-            };
-            str = str.Substring(1, 1).ToUpper() + str.Substring(2);
-            return str;
-        }
-
-        #region Private members
-        private static string CurPhrase(decimal money,
-            string word1, string word234, string wordmore,
-            string sword1, string sword234, string swordmore)
-        {
-            //money=decimal.Round(money,2);
-            decimal decintpart = decimal.Truncate(money);
-            ulong intpart = decimal.ToUInt64(decintpart);
-            string str = NumPhrase(intpart, true);
-            return str;
-
-        }
-        private static string EndTh(byte ThNum, byte Dek)
-        {
-            bool In234 = ((Dek >= 2) && (Dek <= 4));
-            bool More4 = ((Dek > 4) || (Dek == 0));
-            if (((ThNum > 2) && In234) || ((ThNum == 2) && (Dek == 1))) return "і";
-            else if ((ThNum > 2) && More4) return "ів";
-            else if ((ThNum == 2) && In234) return "і";
-            else return "";
-        }
-        private static string EndDek1(byte Dek, bool IsMale)
-        {
-            if ((Dek > 2) || (Dek == 0)) return "";
-            else if (Dek == 1)
-            {
-                if (IsMale) return "ин";
-                else return "на";
-            }
-            else
-            {
-                if (IsMale) return "а";
-                else return "а";
-            }
-        }
-        #endregion
-
-
-        //konwerter rosyjski
-        public static string GrnPhrase_RU(int number)
+        public static string NumberToWords_RU(int number)
         {
 
             int[] array_int = new int[4];
             string[,] array_string = new string[4, 3] {{" миллиард", " миллиарда", " миллиардов"},
-                {" миллион", " миллиона", " миллионов"},
-                {" тысяча", " тысячи", " тысяч"},
-                {"", "", ""}};
+                    {" миллион", " миллиона", " миллионов"},
+                    {" тысяча", " тысячи", " тысяч"},
+                    {"", "", ""}};
             array_int[0] = (number - (number % 1000000000)) / 1000000000;
             array_int[1] = ((number % 1000000000) - (number % 1000000)) / 1000000;
             array_int[2] = ((number % 1000000) - (number % 1000)) / 1000;
@@ -216,8 +137,73 @@ namespace KomugikoLibrary
             }
             return result;
         }
+        public static string NumberToWords_UA(int number)
+        {
+            return CurPhrase(number, "гривня", "гривні", "гривень", "копійка", "копійки", "копійок");
+            
+            string NumPhrase(ulong Value, bool IsMale)
+            {
+                if (Value == 0UL) return "Нуль";
+                string[] Dek1 = { "", " од", " дв", " три", " чотири", " п'ять", " шість", " сім", " вісім", " дев'ять", " десять", " одинадцять", " дванадцять", " тринадцять", " чотирнадцять", " п'ятнадцять", " шістнадцять", " сімнадцять", " вісімнадцять", " дев'ятнадцять" };
+                string[] Dek2 = { "", "", " двадцять", " тридцять", " сорок", " п'ятдесят", " шістдесят", " сімдесят", " вісімдесят", " дев'яносто" };
+                string[] Dek3 = { "", " сто", " двісті", " триста", " чотириста", " п'ятсот", " шістсот", " сімсот", " вісімсот", " дев'ятсот" };
+                string[] Th = { "", "", " тисяч", " мільйон", " міліард", " триліон", " квадриліон", " квинтиліон" };
+                string str = "";
+                for (byte th = 1; Value > 0; th++)
+                {
+                    ushort gr = (ushort)(Value % 1000);
+                    Value = (Value - gr) / 1000;
+                    if (gr > 0)
+                    {
+                        byte d3 = (byte)((gr - gr % 100) / 100);
+                        byte d1 = (byte)(gr % 10);
+                        byte d2 = (byte)((gr - d3 * 100 - d1) / 10);
+                        if (d2 == 1) d1 += (byte)10;
+                        bool ismale = (th > 2) || ((th == 1) && IsMale);
+                        str = Dek3[d3] + Dek2[d2] + Dek1[d1] + EndDek1(d1, ismale) + Th[th] + EndTh(th, d1) + str;
+                    };
+                };
+                str = str.Substring(1, 1).ToUpper() + str.Substring(2);
+                return str;
+            }
 
+            #region Private members
+            string CurPhrase(decimal money,
+                string word1, string word234, string wordmore,
+                string sword1, string sword234, string swordmore)
+            {
+                //money=decimal.Round(money,2);
+                decimal decintpart = decimal.Truncate(money);
+                ulong intpart = decimal.ToUInt64(decintpart);
+                string str = NumPhrase(intpart, true);
+                return str;
+
+            }
+            string EndTh(byte ThNum, byte Dek)
+            {
+                bool In234 = ((Dek >= 2) && (Dek <= 4));
+                bool More4 = ((Dek > 4) || (Dek == 0));
+                if (((ThNum > 2) && In234) || ((ThNum == 2) && (Dek == 1))) return "і";
+                else if ((ThNum > 2) && More4) return "ів";
+                else if ((ThNum == 2) && In234) return "і";
+                else return "";
+            }
+            string EndDek1(byte Dek, bool IsMale)
+            {
+                if ((Dek > 2) || (Dek == 0)) return "";
+                else if (Dek == 1)
+                {
+                    if (IsMale) return "ин";
+                    else return "на";
+                }
+                else
+                {
+                    if (IsMale) return "а";
+                    else return "а";
+                }
+            }
+            #endregion
+        }
     }
-
 }
 
